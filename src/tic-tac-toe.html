@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/main.css">
+
+    <script type="module">
+        // 0 = blank, 1 = x, and 2 = 0
+        let board = [
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+        ]
+
+        let keepPlaying = true
+
+        function updateBoard(){
+            let ndx = 1
+            for(let r of board){
+                for(let c of r){
+                    let cell = '&nbsp;'
+
+                    if(c == 1) cell = 'X'
+                    else if(c == 2) cell = 'O'
+
+                    document.querySelector('#cell-' + ndx).innerHTML = cell
+                    ndx++
+                }
+            }
+        }
+
+        function playTicTacToe() {
+            updateBoard()
+            let count = 0
+            documnet.querySelectorAll('.board.col').forEach(function(cell){
+                cell.onclick = function(e){
+                    if(keepPlaying){
+                        let ndx = parseInt(cell.id.substring(5)) - 1
+                        if(board[Math.floor(ndx / 3)][ndx %3] == 0){
+                            board[Math.floor(ndx / 3)][ndx %3] = count % 2 == 0 ? 1 : 2
+                            count++
+                            updateBoard()
+                        }
+                    }
+                }
+            })
+        }
+
+        playTicTacToe()
+    </script>
+</head>
+<body>
+    <div class="container my-5 display-5 text-center">
+        <h1>Tic Tac Toe</h1>
+        <div class="row row-cols-3 board">
+            <div id="cell-1" class="col border"></div>
+            <div id="cell-2" class="col border"></div>
+            <div id="cell-3" class="col border"></div>
+            <div id="cell-4" class="col border"></div>
+            <div id="cell-5" class="col border"></div>
+            <div id="cell-6" class="col border"></div>
+            <div id="cell-7" class="col border"></div>
+            <div id="cell-8" class="col border"></div>
+            <div id="cell-9" class="col border"></div>
+        </div>
+        <div class="row row-cols-1">
+            <div class="col result"></div>
+        </div>
+    </div>
+</body>
+</html>
