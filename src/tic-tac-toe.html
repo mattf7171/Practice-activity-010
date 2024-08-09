@@ -3,71 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="stylesheets/main.css">
-
-    <script type="module">
-        // 0 = blank, 1 = x, and 2 = 0
-        let board = [
-            [0,0,0],
-            [0,0,0],
-            [0,0,0],
-        ]
-
-        let keepPlaying = true
-
-        function updateBoard(){
-            let ndx = 1
-            for(let r of board){
-                for(let c of r){
-                    let cell = '&nbsp;'
-
-                    if(c == 1) cell = 'X'
-                    else if(c == 2) cell = 'O'
-
-                    document.querySelector('#cell-' + ndx).innerHTML = cell
-                    ndx++
-                }
-            }
+    <title>Guest Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            text-align: center;
+            padding: 20px;
         }
-
-        function playTicTacToe() {
-            updateBoard()
-            let count = 0
-            documnet.querySelectorAll('.board.col').forEach(function(cell){
-                cell.onclick = function(e){
-                    if(keepPlaying){
-                        let ndx = parseInt(cell.id.substring(5)) - 1
-                        if(board[Math.floor(ndx / 3)][ndx %3] == 0){
-                            board[Math.floor(ndx / 3)][ndx %3] = count % 2 == 0 ? 1 : 2
-                            count++
-                            updateBoard()
-                        }
-                    }
-                }
-            })
+        .guest-book {
+            max-width: 600px;
+            margin: auto;
         }
-
-        playTicTacToe()
-    </script>
+        .guest-book h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .guest-book table {
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container my-5 display-5 text-center">
-        <h1>Tic Tac Toe</h1>
-        <div class="row row-cols-3 board">
-            <div id="cell-1" class="col border"></div>
-            <div id="cell-2" class="col border"></div>
-            <div id="cell-3" class="col border"></div>
-            <div id="cell-4" class="col border"></div>
-            <div id="cell-5" class="col border"></div>
-            <div id="cell-6" class="col border"></div>
-            <div id="cell-7" class="col border"></div>
-            <div id="cell-8" class="col border"></div>
-            <div id="cell-9" class="col border"></div>
-        </div>
-        <div class="row row-cols-1">
-            <div class="col result"></div>
-        </div>
+    <div class="guest-book">
+        <h1><i class="bi bi-book"></i> Guest Book</h1>
+        <form id="guestForm">
+            <div class="form-group">
+                <input type="text" id="firstName" class="form-control" placeholder="Guest's first name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="lastName" class="form-control" placeholder="Guest's last name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add a guest</button>
+            <button type="button" id="resetButton" class="btn btn-secondary">Reset</button>
+        </form>
+        <button type="button" id="clearButton" class="btn btn-danger mt-3">Clear all</button>
+        <h2>Registered guests</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                </tr>
+            </thead>
+            <tbody id="guestList"></tbody>
+        </table>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
